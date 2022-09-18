@@ -19,6 +19,7 @@ import {EffectCategoryComponent} from "../../shared/ui/effect-category/effect-ca
 import {EffectEnum} from "../../models/enum/effect.enum";
 import {Color} from "../../models/color.model";
 import {colorWithDimmer, standardColor} from "../../shared/utils/color";
+import packageJson from '../../../../package.json'
 
 @Component({
   selector: 'app-dashboard',
@@ -48,6 +49,7 @@ export class DashboardComponent extends Destroyed implements OnInit {
   effectCategorySelected: EffectEnum | undefined;
   selectedDevice: Device | undefined = undefined;
   private selectedColor: Color | undefined;
+  public version: string = packageJson.version;
 
   constructor(private readonly weatherService: WeatherService,
               private readonly bluetoothService: BluetoothService,

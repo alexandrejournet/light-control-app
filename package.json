@@ -1,12 +1,19 @@
 {
-  "name": "led-controller",
+  "name": "light-control-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "release-tag": "node ./update-version",
+    "beta-tag": "node ./update-version beta",
+    "alpha-tag": "node ./update-version alpha",
+    "publish-tag": "package-version-git-tag --push",
+    "alpha": "npm run alpha-tag && npm run publish-tag",
+    "beta": "npm run beta-tag && npm run publish-tag",
+    "release": "npm run release-tag && npm run publish-tag"
   },
   "private": true,
   "dependencies": {
@@ -18,7 +25,9 @@
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "@angular/service-worker": "^14.2.0",
     "@types/web-bluetooth": "^0.0.15",
+    "package-version-git-tag": "^3.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

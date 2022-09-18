@@ -1,0 +1,312 @@
+:host {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  background-color: #F6F6F6;
+
+  .sidebar {
+    background: black;
+    width: 20%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button-bluetooth {
+      width: 10vw;
+      height: 10vw;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 0 20px 5px rgba(0, 117, 255, 1);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 5vw;
+      }
+
+      &:hover {
+        box-shadow: 0 0 20px 10px rgba(0, 117, 255, 1);
+
+        img {
+          width: 5.5vw;
+        }
+      }
+    }
+
+    .button-on-off {
+      position: absolute;
+      width: 100%;
+      height: 80px;
+      bottom: 10px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .on-off-container {
+        width: 50%;
+        height: 50%;
+        background: #242424;
+        display: flex;
+        justify-content: center;
+        border-radius: 5px;
+        border: 1px solid #cecece;
+
+        input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .switch {
+          width: 45%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          color: white;
+
+          &.on {
+            background: #505050;
+          }
+        }
+      }
+    }
+
+    .hour-temperature {
+      position: absolute;
+      top:0;
+      width: 100%;
+      height: 20%;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .hour {
+        font-size: 26pt;
+        letter-spacing: 0.1em;
+      }
+      .seconds {
+        font-size: 10pt;
+      }
+
+      .temperature {
+        font-size: 15pt;
+      }
+
+    }
+  }
+  .content {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .content-header {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      height: 20%;
+      width: 60%;
+
+      .icon {
+        width: 5vw;
+        height: 5vw;
+        background: black;
+        border-radius: 50%;
+
+        &.small {
+          width: 3vw;
+          height: 3vw;
+        }
+
+        &.smaller {
+          width: 2vw;
+          height: 2vw;
+        }
+      }
+
+      .welcome-title {
+        width: 100%;
+        font-size: 30pt;
+        align-items: center;
+      }
+
+      .line {
+        width: 100%;
+
+        div {
+          height: 2px;
+          width: 25%;
+          background: black;
+        }
+      }
+    }
+
+    .content-cards {
+      height: 80%;
+      width: 100%;
+      display: flex;
+      justify-content: space-evenly;
+
+      .light-normal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .picker {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50%;
+      }
+
+      .effect-listing {
+        height: calc(100% - 75px);
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+
+
+
+.mid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Switch starts here */
+.rocker {
+  display: inline-block;
+  position: relative;
+  font-weight: bold;
+  text-align: center;
+  color: #888;
+  width: 7em;
+  height: 4em;
+  overflow: hidden;
+}
+
+.rocker::before {
+  content: "";
+  position: absolute;
+  top: 0.5em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-bottom: 0;
+}
+
+.rocker input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-left,
+.switch-right {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em;
+  width: 3em;
+  transition: 0.2s;
+}
+
+.switch-left {
+  height: 2.4em;
+  width: 2.75em;
+  left: 0.85em;
+  bottom: 0.4em;
+  background-color: #ddd;
+  transform: rotate(15deg) skewX(15deg);
+}
+
+.switch-right {
+  right: 0.5em;
+  bottom: 0;
+  background-color: green;
+  color: #fff;
+}
+
+.switch-left::before,
+.switch-right::before {
+  content: "";
+  position: absolute;
+  width: 0.4em;
+  height: 2.45em;
+  bottom: -0.45em;
+  background-color: #ccc;
+  transform: skewY(-65deg);
+}
+
+.switch-left::before {
+  left: -0.4em;
+}
+
+.switch-right::before {
+  right: -0.375em;
+  background-color: transparent;
+  transform: skewY(65deg);
+}
+
+input:checked + .switch-left {
+  color: black;
+  bottom: 0;
+  left: 0.5em;
+  height: 2.5em;
+  width: 3em;
+  transform: rotate(0deg) skewX(0deg);
+}
+
+input:checked + .switch-left::before {
+  background-color: transparent;
+  width: 3.0833em;
+}
+
+input:checked + .switch-left + .switch-right {
+  background-color: #ddd;
+  color: #888;
+  bottom: 0.45em;
+  right: 0.8em;
+  height: 2.4em;
+  width: 2.75em;
+  transform: rotate(-15deg) skewX(-15deg);
+}
+
+input:checked + .switch-left + .switch-right::before {
+  background-color: #ccc;
+}
+
+/* Keyboard Users */
+input:focus + .switch-left {
+  color: #333;
+}
+
+input:checked:focus + .switch-left {
+  color: #fff;
+}
+
+input:focus + .switch-left + .switch-right {
+  color: #fff;
+}
+
+input:checked:focus + .switch-left + .switch-right {
+  color: #333;
+}

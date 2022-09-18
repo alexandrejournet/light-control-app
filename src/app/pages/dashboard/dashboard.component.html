@@ -1,0 +1,65 @@
+<div class="sidebar">
+  <div class="hour-temperature">
+    <div class="hour">{{currentTime | async | date:"HH:mm"}}<span
+      class="seconds">{{currentTime | async | date:"ss"}}</span></div>
+
+    <div class="temperature">{{currentWeatherData?.current_weather?.temperature}}°C</div>
+  </div>
+  <div class="button-bluetooth" (click)="pressButton()"><img src="assets/bluetooth-icon.png" alt="bluetooth-icon"></div>
+  <div class="button-on-off">
+    <!--<div class="mid">
+      <label class="rocker">
+        <input type="checkbox" [checked]="allOn" (change)="lightAll()">
+        <span class="switch-left">Off</span>
+        <span class="switch-right">On</span>
+      </label>
+    </div>-->
+    <div class="on-off-container" (click)="lightAll()">
+      <span class="switch" [ngClass]="{'on': !this.allOn}">0</span>
+      <span class="switch" [ngClass]="{'on': this.allOn}">1</span>
+    </div>
+  </div>
+</div>
+<div class="content">
+  <div class="content-header">
+    <!--<div class="welcome-title">Dashboard</div>-->
+    <div class="icon smaller"></div>
+    <div class="icon small"></div>
+    <div class="icon"></div>
+    <div class="icon small"></div>
+    <div class="icon smaller"></div>
+  </div>
+
+
+  <div class="content-cards">
+    <app-card title="Lampes">
+      <ng-container *ngFor="let device of devices">
+        <app-lampe [device]="device" (lightEvent)="checkLights()"></app-lampe>
+      </ng-container>
+    </app-card>
+    <app-card title="Couleur">
+      <div class="light-normal">
+        <button (click)="whiteLight()">Lumière normale</button>
+      </div>
+      <div class="picker">
+        <app-color-picker (color)="selectColor($event)"></app-color-picker>
+      </div>
+      <div class="bottom">
+        <app-slider name="Luminosité" [value]="dimmer"></app-slider>
+      </div>
+    </app-card>
+    <app-card title="Effets">
+      <div class="effect-listing">
+        <ng-container *ngFor="let effect of effects | keyvalue: keepOrder">
+          <app-effect-category [enum]="effect.value"
+                               [isOpened]="checkSelectedCategory(effect.value)"
+                               (toggleEvent)="selectOpened($event)"></app-effect-category>
+        </ng-container>
+      </div>
+
+      <div class="bottom">
+        <app-slider name="Vitesse"></app-slider>
+      </div>
+    </app-card>
+  </div>
+</div>

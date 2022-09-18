@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+
+  align-items: center;
+
+  .slider-title {
+    font-size: large;
+    font-weight: 700;
+    width: 90%;
+    text-align: start;
+  }
+
+  .slider-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+  }
+
+  input {
+    width: 80%;
+    color: white;
+  }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    height: 7px;
+    background: #c1c1c1;
+    border-radius: 5px;
+  }
+
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 0 4px rgba(black, 0.5);
+  }
+}

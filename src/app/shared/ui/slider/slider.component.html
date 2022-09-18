@@ -1,0 +1,13 @@
+<div class="slider-title">{{name}}</div>
+<div class="slider-content">
+  <input
+    #range
+    class="input-range"
+    type="range"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [(ngModel)]="value"
+    (ngModelChange)="fillProgress()">
+  <span>{{value}}</span>
+</div>

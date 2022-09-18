@@ -1,0 +1,31 @@
+:host {
+  width: 100%;
+
+  .effect-category {
+    padding: 0.5em 1em;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .effect-category-title {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      border-bottom: 1px solid #cecece;
+      transition: all 0.2s;
+      font-weight: 800;
+      width: 100%;
+
+      &:hover {
+        border-bottom: 1px solid black;
+      }
+    }
+
+    .effect-list {
+      display: flex;
+      flex-direction: column;
+      max-height: 30vh;
+      overflow-y: auto;
+    }
+  }
+}

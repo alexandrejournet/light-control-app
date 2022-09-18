@@ -1,0 +1,20 @@
+<ng-container *ngIf="device">
+  <div class="device">
+    <div class="device-title">
+      <div class="device-rename">
+        <ng-container *ngIf="isEditing else name">
+          <input [(ngModel)]="device.name">
+          <button (click)="this.isEditing = !this.isEditing">SAVE</button>
+        </ng-container>
+        <ng-template #name>
+          <span (click)="this.isEditing = !this.isEditing">{{device.name}}</span>
+        </ng-template>
+      </div>
+      <div class="status">{{device.isConnected ? 'Connecté' : 'Déconnecté'}}</div>
+    </div>
+    <div class="device-actions">
+      <app-switch [checked]="device.isOn" (switchEvent)="light()"></app-switch>
+      <!--<button (click)="light()">ON/OFF</button>-->
+    </div>
+  </div>
+</ng-container>

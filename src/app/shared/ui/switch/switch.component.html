@@ -1,6 +1,6 @@
 <div class="toggle-wrapper">
   <div class="toggle normal">
-    <input id="normal" type="checkbox" (click)="switch()" [checked]="checked">
-    <label class="toggle-item" for="normal"></label>
+    <input [id]="'normal-'+index" type="checkbox" (click)="switch()" [checked]="checked">
+    <label class="toggle-item" [for]="'normal-'+index"></label>
   </div>
 </div>

@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormsModule} from "@angular/forms";
 
@@ -17,9 +27,10 @@ export class SliderComponent implements AfterViewInit {
   @Input() max = 100;
   @Input() step = 1;
 
+  @Output() change: EventEmitter<any> = new EventEmitter<any>();
+
   @ViewChild('range') range?: ElementRef;
 
-  // TODO DEBOUNCE EVENT EMIT
 
   ngAfterViewInit(): void {
     this.fillProgress();
@@ -29,6 +40,7 @@ export class SliderComponent implements AfterViewInit {
     if (this.range) {
       const pourcent = ((this.value / this.max) * 100).toFixed(2);
       this.range.nativeElement.style.background = `linear-gradient(to right, black 0%, black ${pourcent}%, #c1c1c1 ${pourcent}%, #c1c1c1 100%)`;
+      this.change.emit(this.value)
     }
   }
 }

@@ -61,11 +61,12 @@ export class ColorPickerComponent implements AfterViewInit {
     if (!this.ctx) {
       this.ctx = this.canvas.nativeElement.getContext('2d')!;
     }
-    const width = this.canvas?.nativeElement.width;
-    const height = this.canvas?.nativeElement.height;
-    this.ctx!.clearRect(0, 0, width, height);
+    const windowWidth = window.innerWidth * 15 / 100
+    this.canvas.nativeElement.width = windowWidth;
+    this.canvas.nativeElement.height = windowWidth;
+    this.ctx!.clearRect(0, 0, windowWidth, windowWidth);
 
-    const gradient = this.ctx!.createConicGradient(0, 75 , 75);
+    const gradient = this.ctx!.createConicGradient(0, windowWidth/2 , windowWidth/2);
     gradient.addColorStop(0, 'rgba(255, 0, 0, 1)');
     gradient.addColorStop(0.17, 'rgba(255, 255, 0, 1)');
     gradient.addColorStop(0.34, 'rgba(0, 255, 0, 1)');
@@ -75,17 +76,17 @@ export class ColorPickerComponent implements AfterViewInit {
     gradient.addColorStop(1, 'rgba(255, 0, 0, 1)');
 
     this.ctx!.beginPath();
-    this.ctx!.ellipse(75, 75, 75, 75, 0, 0, 2 * Math.PI);
+    this.ctx!.ellipse(windowWidth/2, windowWidth/2, windowWidth/2, windowWidth/2, 0, 0, 2 * Math.PI);
     this.ctx!.fillStyle = gradient;
     this.ctx!.fill();
     this.ctx!.closePath();
 
     if (this.selectedHeight && this.selectedWidth) {
       this.ctx.beginPath()
-      this.ctx.strokeStyle = 'white';
+      this.ctx.strokeStyle = 'black';
       this.ctx.lineWidth = 1;
       //this.ctx.rect(this.selectedWidth-5, this.selectedHeight - 5, 10, 10)
-      this.ctx.ellipse(this.selectedWidth, this.selectedHeight, 5, 5, 0, 0, 2 * Math.PI);
+      this.ctx.ellipse(this.selectedWidth, this.selectedHeight, 3, 3, 0, 0, 2 * Math.PI);
       this.ctx.stroke();
       this.ctx.closePath()
     }
@@ -95,6 +96,7 @@ export class ColorPickerComponent implements AfterViewInit {
 
   emitColor(x: number, y: number) {
     const rgbaColor = this.getColor(x, y);
+    console.log(rgbaColor)
     this.color.emit(rgbaColor);
   }
 

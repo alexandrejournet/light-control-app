@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {CommonModule, KeyValue} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {Destroyed} from "../../shared/injectable/destroyed.injectable";
 import {interval, Observable, of, takeUntil} from "rxjs";
 import {WeatherService} from "../../services/weather.service";
@@ -18,13 +18,14 @@ import {SliderComponent} from "../../shared/ui/slider/slider.component";
 import {EffectCategoryComponent} from "../../shared/ui/effect-category/effect-category.component";
 import {EffectEnum} from "../../models/enum/effect.enum";
 import {Color} from "../../models/color.model";
-import {colorWithDimmer, standardColor} from "../../shared/utils/color";
+import {colorWithDimmer, coolWhite, coolWithDimmer, modByte, warmWhite, warmWithDimmer} from "../../shared/utils/color";
 import packageJson from '../../../../package.json'
+import {Mod} from "../../models/constants/mods.constant";
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-    imports: [CommonModule, SharedModule, ColorPickerComponent, FormsModule, LampeComponent, CardComponent, SliderComponent, EffectCategoryComponent],
+  imports: [CommonModule, SharedModule, ColorPickerComponent, FormsModule, LampeComponent, CardComponent, SliderComponent, EffectCategoryComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -40,21 +41,24 @@ export class DashboardComponent extends Destroyed implements OnInit {
   allOn = false;
 
   dimmer: number = 100;
+  speed: number = 10;
+
+  currentLight: 'warm' | 'cool' | 'color' = "warm";
 
   readonly effects = EffectEnum;
-  keepOrder = (a: any, b: any) => {
-    return a;
-  }
-
   effectCategorySelected: EffectEnum | undefined;
   selectedDevice: Device | undefined = undefined;
-  private selectedColor: Color | undefined;
+  selectedColor: Color | undefined;
   public version: string = packageJson.version;
 
   constructor(private readonly weatherService: WeatherService,
               private readonly bluetoothService: BluetoothService,
               private readonly localStorage: LocalStorageService) {
     super();
+  }
+
+  keepOrder = (a: any, b: any) => {
+    return a;
   }
 
   ngOnInit(): void {
@@ -138,7 +142,7 @@ export class DashboardComponent extends Destroyed implements OnInit {
   }
 
   initDevices() {
-    if(isNotNullOrUndefined(this.localStorage.getData('devices'))) {
+    if (isNotNullOrUndefined(this.localStorage.getData('devices'))) {
       this.devices = JSON.parse(this.localStorage.getData('devices')!);
     }
   }
@@ -164,28 +168,65 @@ export class DashboardComponent extends Destroyed implements OnInit {
   }
 
   selectColor(color: Color) {
+    this.currentLight = 'color';
     this.selectedColor = color;
-    if(this.selectedDevice) {
+    const colorToSend = colorWithDimmer(color, this.dimmer);
+    this.sendColorToDevices(colorToSend);
+  }
+
+  sendColorToDevices(bytes: Uint8Array) {
+    if (this.selectedDevice) {
 
     } else {
       this.allOn = true;
-      const colorToSend = colorWithDimmer(color, this.dimmer);
       this.devices.forEach(item => {
         item.isOn = true;
-        this.bluetoothService.writeValue$(item.characteristic!, colorToSend);
+        this.bluetoothService.writeValue$(item.characteristic!, bytes);
       })
     }
   }
 
-  sendColorToDevices() {
-
-  }
-
-  whiteLight() {
+  warmWhiteLight() {
+    this.currentLight = 'warm';
     this.allOn = true;
     this.devices.forEach(item => {
       item.isOn = true;
-      this.bluetoothService.writeValue$(item.characteristic!, standardColor);
+      this.bluetoothService.writeValue$(item.characteristic!, warmWhite);
     })
+  }
+
+  coolWhiteLight() {
+    this.currentLight = 'cool';
+    this.allOn = true;
+    this.devices.forEach(item => {
+      item.isOn = true;
+      this.bluetoothService.writeValue$(item.characteristic!, coolWhite);
+    })
+  }
+
+  dimmerLight(value: number) {
+    this.dimmer = value;
+    let color;
+    switch (this.currentLight) {
+      case "warm":
+        color = warmWithDimmer(this.dimmer);
+        break;
+      case "cool":
+        color = coolWithDimmer(this.dimmer);
+        break;
+      case "color":
+        if (this.selectedColor) {
+          color = colorWithDimmer(this.selectedColor, this.dimmer);
+        } else {
+          color = warmWithDimmer(this.dimmer);
+        }
+        break;
+    }
+    this.sendColorToDevices(color);
+  }
+
+  sendMod(mod: Mod) {
+    const bytes = modByte(mod, this.speed);
+    this.sendColorToDevices(bytes);
   }
 }

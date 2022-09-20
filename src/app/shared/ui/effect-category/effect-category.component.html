@@ -3,7 +3,7 @@
     <div class="effect-category-title" (click)="fold()">{{enum | effectName}}</div>
     <div class="effect-list" [ngClass]="{'hide': !isOpened}">
       <ng-container *ngFor="let effect of effectsList">
-        <app-effect-item [effect]="effect"></app-effect-item>
+        <app-effect-item [effect]="effect" (select)="select($event)"></app-effect-item>
       </ng-container>
     </div>
   </div>

@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SwitchComponent {
 
+  @Input() index: number | undefined = 0;
   @Input() checked: boolean | undefined = false;
   @Output() switchEvent: EventEmitter<any> = new EventEmitter<any>();
 

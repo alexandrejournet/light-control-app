@@ -170,8 +170,32 @@
 
       .light-normal {
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
+
+        .btn-light {
+          padding: 1em;
+          border-radius: 5px;
+          box-shadow: 0 0 4px rgba(black, 0.5);
+          width: 30%;
+          text-align: center;
+          font-weight: bold;
+          cursor: pointer;
+
+          &.warm {
+            background-color: #FDF4DC;
+          }
+
+          &.cool {
+            background-color: #F4FDFF;
+          }
+
+          &:hover {
+            transform: scale(0.95);
+          }
+        }
+
+
       }
 
       .picker {
@@ -189,4 +213,21 @@
       }
     }
   }
+}
+
+.chosen-color {
+  height: 30px;
+  width: 30px;
+  box-shadow: 0 0 4px rgba(black, 0.3);
+  border-radius: 50%;
+  position: absolute;
+  top: 4%;
+  right: 6%;
+}
+
+.no-device {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
 }

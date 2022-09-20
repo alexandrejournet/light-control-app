@@ -13,7 +13,7 @@
       <div class="status">{{device.isConnected ? 'Connecté' : 'Déconnecté'}}</div>
     </div>
     <div class="device-actions">
-      <app-switch [checked]="device.isOn" (switchEvent)="light()"></app-switch>
+      <app-switch [index]="index" [checked]="device.isOn" (switchEvent)="light()"></app-switch>
       <!--<button (click)="light()">ON/OFF</button>-->
     </div>
   </div>

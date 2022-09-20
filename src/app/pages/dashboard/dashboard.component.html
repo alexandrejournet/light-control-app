@@ -34,19 +34,30 @@
 
   <div class="content-cards">
     <app-card title="Lampes">
-      <ng-container *ngFor="let device of devices">
-        <app-lampe [device]="device" (lightEvent)="checkLights()"></app-lampe>
+      <ng-container *ngIf="devices && devices.length > 0; else noDevices">
+        <ng-container *ngFor="let device of devices; let i = index">
+          <app-lampe [device]="device" [index]="i" (lightEvent)="checkLights()"></app-lampe>
+        </ng-container>
       </ng-container>
+
+      <ng-template #noDevices>
+        <div class="no-device">Aucune lampe enregistrée.</div>
+      </ng-template>
     </app-card>
     <app-card title="Couleur">
-      <div class="light-normal">
-        <button (click)="whiteLight()">Lumière normale</button>
-      </div>
+      <ng-container *ngIf="currentLight === 'color' && selectedColor">
+        <div class="chosen-color"
+             [style]="'background-color:rgb('+selectedColor.r+','+selectedColor.g+','+selectedColor.b+')'"></div>
+      </ng-container>
       <div class="picker">
         <app-color-picker (color)="selectColor($event)"></app-color-picker>
       </div>
+      <div class="light-normal">
+        <div class="btn-light warm" (click)="warmWhiteLight()">Warm</div>
+        <div class="btn-light cool" (click)="coolWhiteLight()">Cool</div>
+      </div>
       <div class="bottom">
-        <app-slider name="Luminosité" [value]="dimmer"></app-slider>
+        <app-slider name="Luminosité" [value]="100" (change)="dimmerLight($event)"></app-slider>
       </div>
     </app-card>
     <app-card title="Effets">
@@ -54,7 +65,8 @@
         <ng-container *ngFor="let effect of effects | keyvalue: keepOrder">
           <app-effect-category [enum]="effect.value"
                                [isOpened]="checkSelectedCategory(effect.value)"
-                               (toggleEvent)="selectOpened($event)"></app-effect-category>
+                               (toggleEvent)="selectOpened($event)"
+                               (selectMod)="sendMod($event)"></app-effect-category>
         </ng-container>
       </div>
 

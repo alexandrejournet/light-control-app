@@ -18,6 +18,7 @@ export class EffectCategoryComponent implements OnInit {
   @Input() enum!: string | EffectEnum;
   @Input() isOpened: boolean = false;
   @Output() toggleEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() selectMod: EventEmitter<any> = new EventEmitter<any>();
 
   effectsList: Mod[] = [];
 
@@ -41,5 +42,9 @@ export class EffectCategoryComponent implements OnInit {
         this.effectsList = strobos;
         break;
     }
+  }
+
+  select($event: any) {
+    this.selectMod.emit($event);
   }
 }

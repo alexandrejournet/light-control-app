@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {Mod} from "../../../../models/constants/mods.constant";
 import {FormatService} from "../../../../services/format.service";
@@ -10,12 +10,13 @@ import {FormatService} from "../../../../services/format.service";
   templateUrl: './effect-item.component.html',
   styleUrls: ['./effect-item.component.scss']
 })
-export class EffectItemComponent implements OnInit {
+export class EffectItemComponent {
   @Input() effect: Mod | undefined;
+  @Output() select: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(public readonly formatService: FormatService) { }
 
-  ngOnInit(): void {
+  selectMod() {
+    this.select.emit(this.effect);
   }
-
 }

@@ -16,6 +16,7 @@ import {SwitchComponent} from "../switch/switch.component";
 export class LampeComponent implements OnInit {
 
   @Input() device: Device | undefined;
+  @Input() index: any;
   @Output() lightEvent: EventEmitter<any> = new EventEmitter<any>();
   isEditing: boolean = false;
 

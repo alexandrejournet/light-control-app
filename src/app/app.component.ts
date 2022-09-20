@@ -25,24 +25,14 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkState();
-    this.swUpdate.available.subscribe((event) => {
-      console.log('current version: ', event.current);
-      console.log('available version: ', event.available);
-      if (confirm('Software update avaialble.')) {
-        this.swUpdate.activateUpdate().then(() => {
-          //Perform your action here
-          window.location.reload()
-        });
-      }
-    });
-
     this.swUpdate.versionUpdates.subscribe((value: VersionEvent) => {
       console.log('Available version: ', value);
-      if (confirm('Une nouvelle version est disponible. Votre page va être rechargée.')) {
-        this.swUpdate.activateUpdate().then(() => {
-          //Perform your action here
-          window.location.reload()
-        });
+      if (value.type === "VERSION_DETECTED") {
+        if (confirm('Une nouvelle version est disponible. Votre page va être rechargée.')) {
+          this.swUpdate.activateUpdate().then(() => {
+            window.location.reload()
+          });
+        }
       }
     })
   }

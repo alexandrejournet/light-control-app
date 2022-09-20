@@ -15,13 +15,16 @@
           "standalone": true
         },
         "@schematics/angular:directive": {
-          "skipTests": true
+          "skipTests": true,
+          "standalone": true
         },
         "@schematics/angular:pipe": {
-          "skipTests": true
+          "skipTests": true,
+          "standalone": true
         },
         "@schematics/angular:helper": {
-          "skipTests": true
+          "skipTests": true,
+          "standalone": true
         },
         "@schematics/angular:guard": {
           "skipTests": true

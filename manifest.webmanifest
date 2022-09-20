@@ -1,6 +1,6 @@
 {
-  "name": "LedController",
-  "short_name": "LedController",
+  "name": "Light Control App",
+  "short_name": "Light Control App",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
